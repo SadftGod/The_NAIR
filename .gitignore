@@ -1,0 +1,8 @@
+/envire/
+.env
+__pycache__/
+**/__pycache__/
+*.pyc
+/app/configs/security/*
+
+/modules/logs/*
