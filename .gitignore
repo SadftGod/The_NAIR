@@ -1,4 +1,4 @@
-/envire/
+/venvire/
 .env
 __pycache__/
 **/__pycache__/
@@ -6,3 +6,4 @@ __pycache__/
 /app/configs/security/*
 
 /modules/logs/*
+/logs/*

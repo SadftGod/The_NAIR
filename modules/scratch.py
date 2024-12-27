@@ -6,7 +6,7 @@ import os
 
 class Scratch:
     def from_():
-        scratch_arr = ["setuptools","psutil","tqdm"]
+        scratch_arr = ["setuptools","psutil","tqdm","colorama"]
         if not os.path.exists("logs"):
            os.mkdir("logs")
         with open("logs/install_logs.log", "w") as log_file:

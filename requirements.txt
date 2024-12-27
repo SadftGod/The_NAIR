@@ -1,2 +1,6 @@
 colorama
 cryptography
+astral
+ephem
+python-dotenv
+grpc
