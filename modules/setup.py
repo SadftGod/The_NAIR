@@ -32,8 +32,19 @@ class SetUp:
 
       
    def start_grpc(self):
+      from app.servers.grpc import GRPC_server
+      
+      port = 2634
+      grpc_server = GRPC_server()
+      server = grpc_server()
+      server.add_insecure_port(f'[::]:{port}')
+      server.start()
+      
       from modules.palette import Palette as p
-      p.red("Passed")
+      p.cyanTag("Server",f"Started on {p.whiteBackReturn(port)}")
+      server.wait_for_termination() 
+
+
    
    def check_venv(self):
       """Check if running inside a virtual environment"""

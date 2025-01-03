@@ -3,6 +3,7 @@ try:
    import traceback        
    from grpc import StatusCode
    from modules.palette import Palette as p
+   from app.services.templates.tokenTemplate import TokenAndUserTemplate
 except Exception as e:
    p.yellowFatTag("Exception Error",f"Can not import modules {e}")
    pass

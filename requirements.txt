@@ -3,4 +3,5 @@ cryptography
 astral
 ephem
 python-dotenv
-grpc
+grpcio
+grpcio-tools

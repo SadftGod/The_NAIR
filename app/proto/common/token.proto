@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+import "app/proto/common/common.proto";
+
+message JustTokenResponse {
+    oneof tokenResponse{
+        string token = 1;
+        DefaultErrorResponse error_response = 2;
+    }   
+}
+
+message User {
+    string name = 1;
+    string email = 2;
+    string language = 3;
+    string theme = 4;
+    string birthdate = 5;
+    int32 credits = 6;
+    string last_login = 7;
+    string photo_link = 8;
+    string sex = 9;
+    string pronounce = 10;
+}
+
+
+
+message TokenAndUserData {
+    string token = 1;
+    User user = 2;
+}
