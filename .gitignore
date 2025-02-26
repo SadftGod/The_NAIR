@@ -7,3 +7,5 @@ __pycache__/
 
 /modules/logs/*
 /logs/*
+
+models/box/invenv/
