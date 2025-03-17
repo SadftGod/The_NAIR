@@ -15,8 +15,6 @@ class SetUp:
 
       from modules.palette import Palette as p
 
-
-
       args = parse_args()
       
       from modules.secret_coder import sc
@@ -32,7 +30,17 @@ class SetUp:
       
    def start_grpc(self):
       from modules.palette import Palette as p
-      p.red("Passed")
+      from app.servers.grpc_server import GRPC_server
+      port = 50526
+      server = GRPC_server()()
+      server.add_insecure_port(f'[::]:{port}')
+      server.start()
+
+      from modules.palette import Palette as p
+    
+      p.cyanTag("gRPC Server",f"Started on {p.whiteBackReturn(port)}")
+      server.wait_for_termination() 
+
    
    def check_venv(self):
       """Check if running inside a virtual environment"""

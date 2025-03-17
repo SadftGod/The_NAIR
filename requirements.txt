@@ -1,2 +1,4 @@
-colorama
 cryptography
+grpcio
+grpcio-tools
+grpcio-reflection
