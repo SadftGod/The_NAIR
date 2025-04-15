@@ -6,6 +6,7 @@ import "google/protobuf/empty.proto";
 
 service UserRouter{
     rpc Login (LoginRequest) returns (TokenAndUserData);
+    rpc Register (RegisterAccount) returns (TokenAndUserData);
 }
 
 message LoginRequest{
@@ -13,3 +14,13 @@ message LoginRequest{
     string password = 2;
     bool keepLogined = 3;
 }
+
+message RegisterAccount{
+    string Email = 1;
+    string NickName = 2;
+    string Password = 3;
+    string Pronounce = 4;
+    string Language = 5;
+    string Theme = 6;
+}
+

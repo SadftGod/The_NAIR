@@ -6,7 +6,7 @@ import subprocess
 
 from modules.argparser import parse_args
 class SetUp:
-   def __call__(self):
+   async def __call__(self):
       signal.signal(signal.SIGINT, self.signal_exit)
       self.check_venv()
 
@@ -24,6 +24,7 @@ class SetUp:
       gc()
       
       try:
+         await self.fill_databases()
          self.start_grpc()
       finally:
          from modules.module import Module as m
@@ -44,6 +45,16 @@ class SetUp:
       p.cyanTag("Server",f"Started on {p.whiteBackReturn(port)}")
       server.wait_for_termination() 
 
+   async def fill_databases(self):
+      from app.database.configurators.configurator import Configurator ,DefaultDataCreature
+      await Configurator().fill_admin()
+      await Configurator().fill_subtables()
+      await Configurator().fill_users()
+      
+      await DefaultDataCreature().create_roles()
+      await DefaultDataCreature().create_plans()
+      await DefaultDataCreature().create_themes()
+      
 
    
    def check_venv(self):

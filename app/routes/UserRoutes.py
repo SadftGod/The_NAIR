@@ -12,3 +12,8 @@ class UserRouter(user_pb2_grpc.UserRouterServicer):
       login,password,keepLogined = request.login,request.password,request.keepLogined
       taut = TokenAndUserTemplate("token",[])
       return taut.get_rpco() 
+   
+   @RubberCatcher(True)
+   @not_empty()
+   def Register(self,request,context):
+      pass

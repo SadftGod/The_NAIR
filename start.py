@@ -2,8 +2,9 @@ import os
 import sys 
 import signal
 from modules.setup import SetUp
+import asyncio
 
-if __name__ == "__main__":
+async def main():
    
    root = os.path.dirname(os.path.abspath(__file__))
    sys.path.append(root)
@@ -11,4 +12,7 @@ if __name__ == "__main__":
    print("SetUp",f"Root setted to {root}")
    
    su = SetUp()
-   su()
+   await su()
+
+if __name__ == "__main__":
+   asyncio.run(main())

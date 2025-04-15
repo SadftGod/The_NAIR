@@ -5,3 +5,5 @@ ephem
 python-dotenv
 grpcio
 grpcio-tools
+psycopg
+python-dotenv

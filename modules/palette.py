@@ -1,62 +1,118 @@
 from colorama import Fore,Style,Back   
-
+import itertools
+import sys
+import time
 
 class Palette:
     
     @staticmethod
-    def red(var):
+    def pickme(var):
+        if not isinstance(var,str):
+            raise Exception(f"Senpai <3 it's must be a string not {type(var)}")
+        colors = [Fore.RED,'\033[38;5;206m','\033[38;5;214m', Fore.YELLOW, Fore.GREEN, Fore.CYAN, Fore.BLUE, Fore.MAGENTA,Fore.WHITE]
+
+        color_cycle = itertools.cycle(colors)
+        for i in range(len(var)):
+            colored_text = ''.join(next(color_cycle) + char for char in var[:i]) + next(color_cycle) + var[i] + var[i+1:]
+            sys.stdout.write('\r' + colored_text)  
+            sys.stdout.flush() 
+            time.sleep(0.1)
+        sys.stdout.write(Style.RESET_ALL + '\n')
+        sys.stdout.flush()
+
+    @staticmethod
+    def red(*vars):
+        var = " ".join(map(str, vars))
         print(f"{Fore.RED}{var}{Style.RESET_ALL}")
         
     @staticmethod
-    def pink(var):
+    def pink(*vars):
+        var = " ".join(map(str, vars))
         print(f"\033[38;5;206m{var}\033[0m")
     
     @staticmethod
-    def cyan(var):
+    def cyan(*vars):
+        var = " ".join(map(str, vars))
         print(f"{Fore.CYAN}{var}{Style.RESET_ALL}")
         
     @staticmethod
-    def yellow(var):
+    def yellow(*vars):
+        var = " ".join(map(str, vars))
         print(f"{Fore.YELLOW}{var}{Style.RESET_ALL}")
         
     @staticmethod
-    def blue(var):
+    def blue(*vars):
+        var = " ".join(map(str, vars))
+        
         print(f"{Fore.BLUE}{var}{Style.RESET_ALL}")
     
     @staticmethod
-    def green(var):
+    def green(*vars):
+        var = " ".join(map(str, vars))
+        
         print(f"{Fore.GREEN}{var}{Style.RESET_ALL}")
     
     @staticmethod
-    def white(var):
+    def white(*vars):
+        var = " ".join(map(str, vars))
+        
         print(f"{Fore.WHITE}{var}{Style.RESET_ALL}")
         
     @staticmethod
-    def redBack(var):
-        print(f"{Back.RED}{Fore.WHITE}{var}{Style.RESET_ALL}")
+    def redBack(*vars):
+        var = " ".join(map(str, vars))
         
+        print(f"{Back.RED}{Fore.WHITE}{var}{Style.RESET_ALL}")
+    
     @staticmethod
-    def pinkBack(var):
+    def pickmeBack(var):
+        if not isinstance(var,str):
+            raise Exception(f"Senpai <3 it's must be a string not {type(var)}")
+        colors = [Back.RED, Back.YELLOW, Back.GREEN, Back.CYAN, Back.BLUE, Back.MAGENTA,Back.WHITE]
+
+        color_cycle = itertools.cycle(colors)
+        for i in range(len(var)):
+            colored_text = ''.join(next(color_cycle) + char for char in var[:i]) + next(color_cycle) + var[i] + var[i+1:]
+            sys.stdout.write('\r' + colored_text)  
+            sys.stdout.flush() 
+            time.sleep(0.1)
+        sys.stdout.write(Style.RESET_ALL + '\n')
+        sys.stdout.flush()
+
+    
+    @staticmethod
+    def pinkBack(*vars):
+        var = " ".join(map(str, vars))
         print(f"\033[48;5;206m{Fore.WHITE}{var}{Style.RESET_ALL}")
     
     @staticmethod
-    def cyanBack(var):
+    def cyanBack(*vars):
+        var = " ".join(map(str, vars))
+        
         print(f"{Back.CYAN}{Fore.WHITE}{var}{Style.RESET_ALL}")
         
     @staticmethod
-    def yellowBack(var):
+    def yellowBack(*vars):
+        var = " ".join(map(str, vars))
+        
         print(f"{Back.YELLOW}{Fore.WHITE}{var}{Style.RESET_ALL}")
         
     @staticmethod
-    def blueBack(var):
+    def blueBack(*vars):
+        var = " ".join(map(str, vars))
+        
         print(f"{Back.BLUE}{Fore.WHITE}{var}{Style.RESET_ALL}")
     
     @staticmethod
-    def greenBack(var):
+    def greenBack(*vars):
+        var = " ".join(map(str, vars))
+        
         print(f"{Back.GREEN}{Fore.WHITE}{var}{Style.RESET_ALL}")
     
     @staticmethod
-    def whiteBack(var):
+    def whiteBack(*vars):
+        var = " ".join(map(str, vars))
+        
         print(f"{Back.WHITE}{Fore.BLACK}{var}{Style.RESET_ALL}")
         
     @staticmethod
@@ -118,59 +174,87 @@ class Palette:
         
     ## return
     @staticmethod
-    def redReturn(var):
+    def redReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Fore.RED}{var}{Style.RESET_ALL}"
      
     @staticmethod
-    def pinkReturn(var):
+    def pinkReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"\033[38;5;206m{var}\033[0m"
     
     @staticmethod
-    def cyanReturn(var):
+    def cyanReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Fore.CYAN}{var}{Style.RESET_ALL}"
         
     @staticmethod
-    def yellowReturn(var):
+    def yellowReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Fore.YELLOW}{var}{Style.RESET_ALL}"
         
     @staticmethod
-    def blueReturn(var):
+    def blueReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Fore.BLUE}{var}{Style.RESET_ALL}"
     
     @staticmethod
-    def greenReturn(var):
+    def greenReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Fore.GREEN}{var}{Style.RESET_ALL}"
     
     @staticmethod
-    def whiteReturn(var):
+    def whiteReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Fore.WHITE}{var}{Style.RESET_ALL}"
     
     @staticmethod
-    def redBackReturn(var):
+    def redBackReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Back.RED}{Fore.WHITE}{var}{Style.RESET_ALL}"
      
     @staticmethod
-    def pinkBackReturn(var):
+    def pinkBackReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"\033[48;5;206m{Fore.WHITE}{var}{Style.RESET_ALL}"
     
     @staticmethod
-    def cyanBackReturn(var):
+    def cyanBackReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Back.CYAN}{Fore.WHITE}{var}{Style.RESET_ALL}"
         
     @staticmethod
-    def yellowBackReturn(var):
+    def yellowBackReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Back.YELLOW}{Fore.WHITE}{var}{Style.RESET_ALL}"
         
     @staticmethod
-    def blueBackReturn(var):
+    def blueBackReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Back.BLUE}{Fore.WHITE}{var}{Style.RESET_ALL}"
     
     @staticmethod
-    def greenBackReturn(var):
+    def greenBackReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Back.GREEN}{Fore.WHITE}{var}{Style.RESET_ALL}"
     
     @staticmethod
-    def whiteBackReturn(var):
+    def whiteBackReturn(*vars):
+        var = " ".join(map(str, vars))
+        
         return f"{Back.WHITE}{Fore.BLACK}{var}{Style.RESET_ALL}"
         
     @staticmethod
