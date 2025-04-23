@@ -6,6 +6,8 @@ import os
 import json
 from dotenv import load_dotenv
 from modules.exceptions import RatException
+from dotenv import load_dotenv
+from app.services.passwordOperator import PasswordOperator as po
 
 
 class Configurator:
@@ -121,7 +123,8 @@ class Configurator:
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     is_email_verified BOOLEAN DEFAULT FALSE,
-                    social_google_id TEXT UNIQUE
+                    social_google_id TEXT UNIQUE DEFAULT NULL,
+                    UNIQUE (email, nickname)  
                 );
             """),
             sql.SQL("""
@@ -158,7 +161,8 @@ class Configurator:
             "languages": [
                 "_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY",
                 "title VARCHAR(100) NOT NULL UNIQUE",
-                "abbreviation CHAR(2) NOT NULL UNIQUE"
+                "abbreviation CHAR(2) NOT NULL UNIQUE",
+                 "UNIQUE(title, abbreviation)"
             ],
         }
 
@@ -242,12 +246,12 @@ class DefaultDataCreature:
     async def create_languages(self,pool):
         db,cursor = pool[Bases.u.value]
 
-        languages = [("english",), ("ukrainian",), ("poland",), ("russian",)] 
+        languages = [("english","en",), ("ukrainian","ua",), ("poland","pl",), ("russian","ru",)] 
 
         query = """
-            INSERT INTO languages (title)
-            VALUES (%s)
-            ON CONFLICT (title) DO NOTHING;
+            INSERT INTO languages (title,abbreviation)
+            VALUES (%s,%s)
+            ON CONFLICT (title,abbreviation) DO NOTHING;
         """
 
         await cursor.executemany(query, languages)
@@ -256,7 +260,59 @@ class DefaultDataCreature:
 
     @connection([Bases.u.value])
     async def create_users(self,pool):
-        db,cursor = pool[Bases.u.value]
-        users = [("giber2017artur@gmail.com","Giber","D3F0JITu$3PII@CB0pD","Creator",3,41,3,"prime","prime","en",)]
+        db, cursor = pool[Bases.u.value]
 
+
+        
+
+        columns = [
+            'email',
+            'nickname',
+            'password',
+            'pronounce',
+            'plan_id',
+            'role_id',
+            'theme_id',
+            'avatar',
+            'profile_hat',
+            'language_id',
+            'sex'
+        ]
+        load_dotenv()
+        raw_json = os.getenv("USERS_JSON")
+        if not raw_json:
+            RatException.fastRat("USERS_JSON not found in .env or is empty")
+
+        users = json.loads(raw_json)
+
+        for i, user in enumerate(users):
+            user[2] = po(user[2]).encode()
+            users[i] = tuple(user)
+
+        values_sql = sql.SQL(', ').join(
+            sql.SQL('({})').format(sql.SQL(', ').join(sql.Placeholder() * len(columns)))
+            for _ in users
+        )
+
+        
+        values_sql = sql.SQL(', ').join(
+            sql.SQL('({})').format(sql.SQL(', ').join(sql.Placeholder() * len(columns)))
+            for _ in users
+        )
+
+
+        insert_query = sql.SQL("""
+            INSERT INTO users ({fields})
+            VALUES {values}
+            ON CONFLICT DO NOTHING
+        """).format(
+            fields=sql.SQL(', ').join(map(sql.Identifier, columns)),
+            values=values_sql
+        )
+
+        flat_values = [item for user in users for item in user]
+
+        await cursor.execute(insert_query, flat_values)
+        await db.commit()
+        p.cyanTag("Bases","✅ Users Added")
 

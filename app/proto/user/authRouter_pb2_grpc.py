@@ -3,10 +3,10 @@
 import grpc
 import warnings
 
-from app.proto.common import token_pb2 as app_dot_proto_dot_common_dot_token__pb2
-from app.proto.user import user_pb2 as app_dot_proto_dot_user_dot_user__pb2
+from app.proto.common import token_pb2 as common_dot_token__pb2
+from app.proto.user import authRouter_pb2 as user_dot_authRouter__pb2
 
-GRPC_GENERATED_VERSION = '1.68.1'
+GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__
 _version_not_supported = False
 
@@ -19,14 +19,14 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in app/proto/user/user_pb2_grpc.py depends on'
+        + f' but the generated code in user/authRouter_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class UserRouterStub(object):
+class AuthServiceStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -36,38 +36,39 @@ class UserRouterStub(object):
             channel: A grpc.Channel.
         """
         self.Login = channel.unary_unary(
-                '/UserRouter/Login',
-                request_serializer=app_dot_proto_dot_user_dot_user__pb2.LoginRequest.SerializeToString,
-                response_deserializer=app_dot_proto_dot_common_dot_token__pb2.TokenAndUserData.FromString,
+                '/user.AuthService/Login',
+                request_serializer=user_dot_authRouter__pb2.LoginRequest.SerializeToString,
+                response_deserializer=common_dot_token__pb2.JustTokenResponse.FromString,
                 _registered_method=True)
 
 
-class UserRouterServicer(object):
+class AuthServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Login(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """здесь возвращаем тип из пакета common
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_UserRouterServicer_to_server(servicer, server):
+def add_AuthServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Login': grpc.unary_unary_rpc_method_handler(
                     servicer.Login,
-                    request_deserializer=app_dot_proto_dot_user_dot_user__pb2.LoginRequest.FromString,
-                    response_serializer=app_dot_proto_dot_common_dot_token__pb2.TokenAndUserData.SerializeToString,
+                    request_deserializer=user_dot_authRouter__pb2.LoginRequest.FromString,
+                    response_serializer=common_dot_token__pb2.JustTokenResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'UserRouter', rpc_method_handlers)
+            'user.AuthService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('UserRouter', rpc_method_handlers)
+    server.add_registered_method_handlers('user.AuthService', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class UserRouter(object):
+class AuthService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -84,9 +85,9 @@ class UserRouter(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/UserRouter/Login',
-            app_dot_proto_dot_user_dot_user__pb2.LoginRequest.SerializeToString,
-            app_dot_proto_dot_common_dot_token__pb2.TokenAndUserData.FromString,
+            '/user.AuthService/Login',
+            user_dot_authRouter__pb2.LoginRequest.SerializeToString,
+            common_dot_token__pb2.JustTokenResponse.FromString,
             options,
             channel_credentials,
             insecure,

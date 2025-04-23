@@ -7,3 +7,6 @@ grpcio
 grpcio-tools
 psycopg
 python-dotenv
+argon2-cffi
+dnspython
+PyJWT

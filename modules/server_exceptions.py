@@ -3,7 +3,6 @@ try:
    import traceback        
    from grpc import StatusCode
    from modules.palette import Palette as p
-   from app.services.templates.tokenTemplate import TokenAndUserTemplate
 except Exception as e:
    p.yellowFatTag("Exception Error",f"Can not import modules {e}")
    pass
@@ -50,23 +49,7 @@ class RubberException(Exception):
         
         return error
 
-    def PositivePlate(message:str,status:int,context):
-        asted_msg = ast.literal_eval(message)
-        
-        token = asted_msg['message']        
-        user = asted_msg['user']['user_id']
-        
-        user["pregnancy_date"] = ""
-        user["height"] = 0
-        user["weight"] = 0
-        del user['type']
-        del user['password']
-        del user["user_id"]
-        
-        context.send_initial_metadata((
-            ('message', 'You need to change password'),  
-        ))
-        return TokenAndUserTemplate(token,user).get_rpco()
+   
         
     def catcher(e:Exception,context):
         if isinstance(e, RubberException):

@@ -1,12 +1,20 @@
 syntax = "proto3";
 
-import "app/proto/common/common.proto";
+import "common/common.proto";
+package common;
 
 message JustTokenResponse {
     oneof tokenResponse{
         string token = 1;
         DefaultErrorResponse error_response = 2;
     }   
+}
+
+message TokenAndUserResponse {
+    oneof Response{
+        TokenAndUserData response = 1;
+        DefaultErrorResponse error_response = 2;
+    }
 }
 
 message User {

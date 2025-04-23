@@ -1,4 +1,5 @@
 syntax = "proto3";
+package common;
 
 message DefaultErrorResponse {
     string error = 1; 

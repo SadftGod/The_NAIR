@@ -20,9 +20,9 @@ def RubberCatcher(detail:bool = False):
      
    def decorator(func):
          @wraps(func)
-         def wrapper(*args, **kwargs):
+         async def wrapper(*args, **kwargs):
             try:
-               return func(*args, **kwargs)
+               return await func(*args, **kwargs)
             except Exception as e:               
                context = args[2] if len(args) > 2 else None
                if not context:

@@ -1,0 +1,13 @@
+syntax = "proto3";
+package user;
+
+import "common/token.proto";
+
+service AuthService {
+  rpc Login (LoginRequest) returns (common.JustTokenResponse);
+}
+
+message LoginRequest {
+  string login    = 1;
+  string password = 2;
+}
