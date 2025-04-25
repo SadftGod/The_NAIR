@@ -1,4 +1,3 @@
-import psycopg
 from psycopg import sql
 from psycopg.sql import Composable
 from psycopg.rows import dict_row
@@ -15,6 +14,11 @@ class Harp:
         self.wheres = sql.SQL("")
         self.query = sql.SQL("")
         self.joins = sql.SQL("")
+        self.returning_clause = sql.SQL("")
+
+        self.conflict_strategy = None
+        self.conflict_columns = []
+        self.update_fields = []
 
 
     def _beautify_params(self,params):
@@ -26,8 +30,11 @@ class Harp:
         return params
     
     def _base_worker(self,base):
-        base ,base_alias = base.split(" ",1)
-        return base.strip() , base_alias.strip()
+        parts = base.split(" ", 1)
+        base_name = parts[0].strip()
+        base_alias = parts[1].strip() if len(parts) > 1 else ''
+
+        return base_name, base_alias
 
     def what(self, *fields:str):
         sql_fields: list[Composable] = []
@@ -55,6 +62,25 @@ class Harp:
         self.whats = sql.SQL(", ").join(sql_fields)
         return self
 
+    def on_conflict(self,strategy:str,*columns: str):
+        strategies = ['nothing','update']
+
+        if not strategy.lower().strip() in strategies:
+            RubberException.fastRubber("Strategy is not allowed",13)
+        
+        self.conflict_strategy = strategy.lower().strip()
+        match strategy:
+            case "nothing":
+                pass
+            case "update":
+                if len(columns) < 2:
+                    RubberException.fastRubber("Update strategy requires conflict columns AND update fields", 13)
+                self.conflict_columns = [columns[0]]
+                self.update_fields = list(columns[1:])
+
+        return self
+
+
 
     def where(self,where_condition):
         tokens = re.split(r'\s+(AND|OR)\s+', where_condition, flags=re.IGNORECASE)
@@ -77,6 +103,44 @@ class Harp:
             joins=self.joins,
             where = self.wheres
         )
+    def build_insert(self):
+        base_insert = sql.SQL("INSERT INTO {table} ({fields}) VALUES ({values})").format(
+            table=sql.Identifier(self.base),
+            fields=self.whats,
+            values=sql.SQL(', ').join(sql.Placeholder() * len(self.params)),
+        )
+        if self.conflict_strategy and self.conflict_columns:
+            conflict_clause = sql.SQL(" ON CONFLICT ({})").format(
+                sql.SQL(", ").join(sql.Identifier(col) for col in self.conflict_columns)
+            )
+
+            match self.conflict_strategy:
+                case "nothing":
+                    conflict_clause += sql.SQL(" DO NOTHING")
+                case "update":
+                    if not self.update_fields:
+                        RubberException.fastRubber("Update fields must be provided for update strategy", 13)
+                    update_pairs = [
+                        sql.SQL("{} = EXCLUDED.{}").format(
+                            sql.Identifier(f), sql.Identifier(f)
+                        ) for f in self.update_fields
+                    ]
+                    update_pairs.append(
+                        sql.SQL("created_at = NOW() + interval '2 minutes'")
+                    )
+
+                    update_clause = sql.SQL(', ').join(update_pairs)
+
+                    conflict_clause += sql.SQL(" DO UPDATE SET ") + update_clause
+
+            base_insert += conflict_clause
+        base_insert += self.returning_clause
+
+        self.query = base_insert
+
+            
+
+
 
     def build_delete(self):
         self.query = sql.SQL(
@@ -98,7 +162,13 @@ class Harp:
         return self
 
 
-    async def call(self, req_type:str="select",return_type:str="tuple"):
+    def returning(self, *returning):
+        self.returning_clause = sql.SQL(" RETURNING ") + sql.SQL(', ').join(
+                sql.SQL(item) for item in returning
+            )
+        return self
+
+    async def call(self, req_type:str="select",return_type:str="tuple",need_commit:bool=False):
         possible_req = ["select","insert","update","delete"]
         possible_return = ["tuple","dict"]
 
@@ -114,8 +184,11 @@ class Harp:
             case "select":
                 self.build_select()
 
+            case "insert":
+                self.build_insert()
+
             case "delete":
-                self.build_delete
+                self.build_delete()
 
 
         p.blueTag("Harp log",self.query.as_string(self.cursor))
@@ -125,6 +198,12 @@ class Harp:
             case "select":
                 await self.cursor.execute(self.query,self.params)
                 rows = await self.cursor.fetchall()
+
+            case "insert":
+                await self.cursor.execute(self.query, self.params )
+                rows = await self.cursor.fetchall()
+                if need_commit:
+                    await self.db.commit()
 
         match return_type:
             case "dict":

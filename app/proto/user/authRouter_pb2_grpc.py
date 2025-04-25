@@ -40,14 +40,46 @@ class AuthServiceStub(object):
                 request_serializer=user_dot_authRouter__pb2.LoginRequest.SerializeToString,
                 response_deserializer=common_dot_token__pb2.JustTokenResponse.FromString,
                 _registered_method=True)
+        self.Register = channel.unary_unary(
+                '/user.AuthService/Register',
+                request_serializer=user_dot_authRouter__pb2.RegisterRequest.SerializeToString,
+                response_deserializer=common_dot_token__pb2.TokenWithText.FromString,
+                _registered_method=True)
+        self.ApproveAccount = channel.unary_unary(
+                '/user.AuthService/ApproveAccount',
+                request_serializer=user_dot_authRouter__pb2.ApproveAccountRequest.SerializeToString,
+                response_deserializer=common_dot_token__pb2.TokenWithText.FromString,
+                _registered_method=True)
+        self.AdditionalInformation = channel.unary_unary(
+                '/user.AuthService/AdditionalInformation',
+                request_serializer=user_dot_authRouter__pb2.AdditionalInformationRequest.SerializeToString,
+                response_deserializer=common_dot_token__pb2.TokenWithText.FromString,
+                _registered_method=True)
 
 
 class AuthServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Login(self, request, context):
-        """здесь возвращаем тип из пакета common
-        """
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def Register(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ApproveAccount(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AdditionalInformation(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -59,6 +91,21 @@ def add_AuthServiceServicer_to_server(servicer, server):
                     servicer.Login,
                     request_deserializer=user_dot_authRouter__pb2.LoginRequest.FromString,
                     response_serializer=common_dot_token__pb2.JustTokenResponse.SerializeToString,
+            ),
+            'Register': grpc.unary_unary_rpc_method_handler(
+                    servicer.Register,
+                    request_deserializer=user_dot_authRouter__pb2.RegisterRequest.FromString,
+                    response_serializer=common_dot_token__pb2.TokenWithText.SerializeToString,
+            ),
+            'ApproveAccount': grpc.unary_unary_rpc_method_handler(
+                    servicer.ApproveAccount,
+                    request_deserializer=user_dot_authRouter__pb2.ApproveAccountRequest.FromString,
+                    response_serializer=common_dot_token__pb2.TokenWithText.SerializeToString,
+            ),
+            'AdditionalInformation': grpc.unary_unary_rpc_method_handler(
+                    servicer.AdditionalInformation,
+                    request_deserializer=user_dot_authRouter__pb2.AdditionalInformationRequest.FromString,
+                    response_serializer=common_dot_token__pb2.TokenWithText.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -88,6 +135,87 @@ class AuthService(object):
             '/user.AuthService/Login',
             user_dot_authRouter__pb2.LoginRequest.SerializeToString,
             common_dot_token__pb2.JustTokenResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def Register(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/user.AuthService/Register',
+            user_dot_authRouter__pb2.RegisterRequest.SerializeToString,
+            common_dot_token__pb2.TokenWithText.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ApproveAccount(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/user.AuthService/ApproveAccount',
+            user_dot_authRouter__pb2.ApproveAccountRequest.SerializeToString,
+            common_dot_token__pb2.TokenWithText.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AdditionalInformation(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/user.AuthService/AdditionalInformation',
+            user_dot_authRouter__pb2.AdditionalInformationRequest.SerializeToString,
+            common_dot_token__pb2.TokenWithText.FromString,
             options,
             channel_credentials,
             insecure,

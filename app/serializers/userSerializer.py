@@ -45,6 +45,14 @@ class User:
         
         return json.dumps(asdict(self), ensure_ascii=False, indent=indent)
 
+@dataclass(frozen=True)
+class UserResponse:
+    u_id: int
+    email: str
+    nickname: str
+    def get_as_json(self, *, indent: int = None) -> str:
+        return json.dumps(asdict(self), ensure_ascii=False, indent=indent)
+
 class UserSerializer:
     def __init__(self, data: Dict[str, Any]):
         
@@ -53,7 +61,7 @@ class UserSerializer:
     def serialize(self) -> User:
         lang = Language(
             id=self._d["language_id"],
-            name=self._d["language_name"],
+            name=self._d["language_name"].title(),
             abbreviation=self._d["language_abbreviation"],
         )
         plan = Plan(
@@ -85,4 +93,16 @@ class UserSerializer:
             plan               = plan,
             role               = role,
             theme              = theme,
+        )
+
+
+class CodeSerializer:
+    def __init__(self, data: Dict[str, Any]):
+        self._d = data
+        
+    def serialize(self) -> UserResponse:
+        return UserResponse(
+            u_id               = self._d.get("_id",0),
+            email              = self._d.get("email",""),
+            nickname           = self._d.get("nickname",""),
         )

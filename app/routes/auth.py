@@ -5,6 +5,7 @@ from modules.decorators.exceptions import RubberCatcher
 from modules.palette import Palette as p
 
 from app.validators.userValidator import UserValidator as uv
+from app.validators.defaultValidator import DefaultValidator as dv
 from modules.server_exceptions import RubberException
 from app.controllers.authController import AuthController as ac
 
@@ -13,6 +14,7 @@ class AuthRouter(authRouter_pb2_grpc.AuthServiceServicer):
     @not_empty("login","password")
     async def Login(self, request, context):
         login,password = request.login ,request.password
+
         try:
             uv(login=login,password=password) \
                 .password_check()\
@@ -20,7 +22,34 @@ class AuthRouter(authRouter_pb2_grpc.AuthServiceServicer):
                 .raise_if_invalid()
         except Exception:
             RubberException.fastRubber("Wrong login or password",3)
-
+        
+        login ,password = login.strip().lower() , password.strip()
         token = await ac.login(login,password)
 
         return token_pb2.JustTokenResponse(token=token)
+    
+    @RubberCatcher(True)
+    @not_empty("email","nickname","password","language_id")
+    async def Register(self, request, context):
+        email,nickname ,password ,language_id = request.email ,request.nickname ,request.password ,request.language_id
+        uv(nick=nickname,password=password,email=email)\
+            .nickname_check() \
+            .email_check() \
+            .password_check()\
+            .raise_if_invalid()
+        dv.validate_id(language_id)
+
+        email , nickname , password = email.strip().lower(), nickname.strip().lower() , password.strip()
+
+        token = await ac.register(email,nickname ,password ,language_id)
+        
+        return token_pb2.TokenWithText(
+                success=token_pb2.TokenWithTextSuccess(
+                    token=token,
+                    text="Success: check your email for approval code"
+                )
+                )
+
+    
+
+            

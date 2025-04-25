@@ -2,12 +2,37 @@ syntax = "proto3";
 package user;
 
 import "common/token.proto";
+import "google/protobuf/timestamp.proto";
 
 service AuthService {
   rpc Login (LoginRequest) returns (common.JustTokenResponse);
+  rpc Register (RegisterRequest) returns (common.TokenWithText);
+  rpc ApproveAccount (ApproveAccountRequest) returns (common.TokenWithText);
+  rpc AdditionalInformation (AdditionalInformationRequest) returns (common.TokenWithText);
 }
 
 message LoginRequest {
   string login    = 1;
   string password = 2;
 }
+
+message RegisterRequest {
+    string email       = 1;
+    string nickname    = 2;
+    string password    = 3;
+    int32  language_id = 4;
+  }
+
+message ApproveAccountRequest{
+    int32 code = 1;
+}
+  
+
+message AdditionalInformationRequest {
+    string pronounce = 1;
+    string avatar    = 2;
+    string sex       = 3;
+    google.protobuf.Timestamp birthday = 4;
+}
+
+

@@ -4,7 +4,8 @@ import os
 import jwt
 from datetime import datetime, timezone, timedelta
 import json
-from app.serializers.userSerializer import UserSerializer
+from app.serializers.userSerializer import UserSerializer , CodeSerializer
+from modules.server_exceptions import RubberException 
 
 class TokenOperator:
     KEY_DIR  = os.path.join("app", "configs", "security")
@@ -12,7 +13,7 @@ class TokenOperator:
 
     JWT_SECRET    = os.getenv("JWT_SECRET")
     JWT_ALGORITHM = "HS256"
-    JWT_EXP_DELTA = timedelta(hours=1)
+    
 
     def __init__(self, data: dict = None):
         self.data = data
@@ -33,11 +34,22 @@ class TokenOperator:
             f.write(key)
         return key
 
-    def create_jwt(self) -> str:
+    def create_jwt(self,time_to_wait:timedelta=timedelta(hours=1),jwt_type:str = 'user') -> str:
         raw = json.dumps(self.data).encode("utf-8")
         encoded_data = Scyber(raw).encode(master_key=self.key)
+        
+        jwt_type = jwt_type.strip().lower()
+        possible_jwt_types = ['user','code']
 
-        user_json = UserSerializer(self.data).serialize().get_as_json()
+        if not jwt_type in possible_jwt_types:
+            RubberException.fastRubber(f"WRONG JWT TOKEN TYPE: use one of {' ,'.join(possible_jwt_types)}")
+        
+        match jwt_type:
+            case 'user':
+                user_json = UserSerializer(self.data).serialize().get_as_json()
+            case 'code':
+                user_json = CodeSerializer(self.data).serialize().get_as_json()
+
         user_dict = json.loads(user_json)
 
         now = datetime.now(timezone.utc)
@@ -45,7 +57,7 @@ class TokenOperator:
             "data": encoded_data,
             "user": user_dict,
             "iat":  now,
-            "exp":  now + self.JWT_EXP_DELTA,
+            "exp":  now + time_to_wait,
         }
 
         token = jwt.encode(

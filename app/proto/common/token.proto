@@ -10,6 +10,19 @@ message JustTokenResponse {
     }   
 }
 
+message TokenWithTextSuccess {
+    string token = 1;
+    string text  = 2;
+  }
+
+message TokenWithText {
+    oneof result {
+      TokenWithTextSuccess     success        = 1;
+      DefaultErrorResponse     error_response = 2;
+    }
+  }
+  
+
 message TokenAndUserResponse {
     oneof Response{
         TokenAndUserData response = 1;

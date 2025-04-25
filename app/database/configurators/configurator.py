@@ -11,8 +11,6 @@ from app.services.passwordOperator import PasswordOperator as po
 
 
 class Configurator:
-
-
     @connection([Bases.admin.value])
     async def fill_admin(self , pool = None):
         db, cursor = pool[Bases.admin.value]
@@ -154,6 +152,10 @@ class Configurator:
             await db.commit()
         p.cyanTag("Bases","✅ Users base configured")
 
+
+
+
+
     @connection([Bases.u.value])
     async def fill_subtables(self,pool):
         db, cursor = pool[Bases.u.value]
@@ -164,6 +166,16 @@ class Configurator:
                 "abbreviation CHAR(2) NOT NULL UNIQUE",
                  "UNIQUE(title, abbreviation)"
             ],
+            "unfinished_registration":[
+               "_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY",
+                "email VARCHAR(255) UNIQUE NOT NULL",
+                "nickname VARCHAR(100) UNIQUE NOT NULL",
+                "password TEXT NOT NULL",
+                "language_id INTEGER NOT NULL REFERENCES languages(_id)",
+                "code INTEGER NOT NULL",
+                "status CHAR(2) NOT NULL DEFAULT 'NA' CHECK (status IN ('NA','A'))",
+                "created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()",
+            ]
         }
 
         for table_name, columns in tables.items():
@@ -177,6 +189,7 @@ class Configurator:
         await db.commit()
         p.cyanTag("Bases","✅ Users subtable configured")
 
+    
 class DefaultDataCreature:
 
     @connection([Bases.admin.value])
