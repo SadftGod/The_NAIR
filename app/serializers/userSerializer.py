@@ -1,6 +1,8 @@
 from dataclasses import dataclass, asdict
 from typing import Optional, Any, Dict
 import json
+from datetime import datetime , date
+
 
 @dataclass(frozen=True)
 class Language:
@@ -41,9 +43,13 @@ class User:
     role: Role
     theme: Theme
 
-    def get_as_json(self, *, indent: int = None) -> str:
-        
-        return json.dumps(asdict(self), ensure_ascii=False, indent=indent)
+    def serialize(self,obj):
+        if isinstance(obj, (date, datetime)):
+            return obj.isoformat()
+        raise TypeError(f"Type {type(obj)} not serializable")
+    
+    def get_as_json(self, indent=None):
+        return json.dumps(asdict(self), ensure_ascii=False, indent=indent, default=self.serialize)
 
 @dataclass(frozen=True)
 class UserResponse:
@@ -52,6 +58,16 @@ class UserResponse:
     nickname: str
     def get_as_json(self, *, indent: int = None) -> str:
         return json.dumps(asdict(self), ensure_ascii=False, indent=indent)
+    
+@dataclass(frozen=True)
+class PreUser:
+    u_id: int
+    email: str
+    nickname: str
+    language_id : int
+    def get_as_json(self, *, indent: int = None) -> str:
+        return json.dumps(asdict(self), ensure_ascii=False, indent=indent)
+
 
 class UserSerializer:
     def __init__(self, data: Dict[str, Any]):
@@ -105,4 +121,19 @@ class CodeSerializer:
             u_id               = self._d.get("_id",0),
             email              = self._d.get("email",""),
             nickname           = self._d.get("nickname",""),
+        )
+
+
+
+class CodeApproveSerializer:
+    def __init__(self, data: Dict[str, Any]):
+        
+        self._d = data
+
+    def serialize(self) -> User:
+        return PreUser(
+            u_id               = self._d["_id"],
+            email              = self._d["email"],
+            nickname           = self._d["nickname"],
+            language_id           = self._d["language_id"]
         )

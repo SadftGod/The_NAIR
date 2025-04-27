@@ -11,3 +11,4 @@ argon2-cffi
 dnspython
 PyJWT
 Jinja2
+Pillow

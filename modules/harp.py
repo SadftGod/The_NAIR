@@ -19,6 +19,7 @@ class Harp:
         self.conflict_strategy = None
         self.conflict_columns = []
         self.update_fields = []
+        self.ctes = []
 
 
     def _beautify_params(self,params):
@@ -80,7 +81,7 @@ class Harp:
 
         return self
 
-
+    
 
     def where(self,where_condition):
         tokens = re.split(r'\s+(AND|OR)\s+', where_condition, flags=re.IGNORECASE)
@@ -96,13 +97,15 @@ class Harp:
         return self
     
     def build_select(self):
+
         self.query = sql.SQL("SELECT {fields} FROM {table} {alias} {joins}{where}").format(
             fields = self.whats,
             table = sql.Identifier(self.base),
-            alias = sql.Identifier(self.base_alias),
+            alias = sql.Identifier(self.base_alias) if self.base_alias else sql.SQL(""),
             joins=self.joins,
             where = self.wheres
         )
+   
     def build_insert(self):
         base_insert = sql.SQL("INSERT INTO {table} ({fields}) VALUES ({values})").format(
             table=sql.Identifier(self.base),
@@ -138,9 +141,43 @@ class Harp:
 
         self.query = base_insert
 
-            
+    def build_update(self):
+        if not self.whats or self.whats.as_string(self.cursor) == "*":
+            RubberException.fastRubber("Update requires specific fields to set", 13)
 
+        fields = []
 
+        if isinstance(self.whats, sql.Composed):
+            for part in self.whats:
+                if isinstance(part, sql.Identifier):
+                    fields.append(part)
+                elif isinstance(part, sql.Composed):
+                    fields.extend(p for p in part if isinstance(p, sql.Identifier))
+                else:
+                    continue
+        elif isinstance(self.whats, sql.Identifier):
+            fields.append(self.whats)
+        else:
+            RubberException.fastRubber("Unknown whats parameter", 2)
+
+        if not fields:
+            RubberException.fastRubber("No fields to update", 10)
+
+        set_clause = sql.SQL(", ").join(
+            sql.SQL("{} = {}").format(
+                f,
+                sql.Placeholder()
+            ) for f in fields
+        )
+
+        base_update = sql.SQL("UPDATE {table} SET {set_clause} {where_clause}").format(
+            table=sql.Identifier(self.base),
+            set_clause=set_clause,
+            where_clause=self.wheres
+        )
+
+        base_update += self.returning_clause
+        self.query = base_update
 
     def build_delete(self):
         self.query = sql.SQL(
@@ -150,6 +187,25 @@ class Harp:
             alias = sql.Identifier(self.base_alias),
             where=self.wheres
         )
+
+
+    def add_cte(self, ctes: tuple[sql.Composed], names: tuple[str]):
+        if len(ctes) != len(names):
+            RubberException.fastRubber("Length of ctes and names must be the same", 13)
+
+        for cte, name in zip(ctes, names):
+            if not isinstance(cte, sql.Composed):
+                RubberException.fastRubber("Each CTE must be a sql.Composed object", 13)
+            composed_cte = sql.SQL("{} AS ({})").format(
+                sql.Identifier(name),
+                cte
+            )
+            self.ctes.append(composed_cte)
+
+        return self
+
+
+
 
     def join(self,base:str,on:str):
         base, alias = self._base_worker(base)
@@ -168,7 +224,18 @@ class Harp:
             )
         return self
 
-    async def call(self, req_type:str="select",return_type:str="tuple",need_commit:bool=False):
+
+
+    def _apply_ctes(self, query: sql.Composable) -> sql.Composable:
+        if not self.ctes:
+            return query
+
+        cte_section = sql.SQL("WITH ") + sql.SQL(", ").join(self.ctes)
+        return cte_section + sql.SQL(" ") + query
+
+
+
+    async def call(self, req_type:str="select",return_type:str="tuple",need_commit:bool=False,get:bool = False,printed:bool = True, ):
         possible_req = ["select","insert","update","delete"]
         possible_return = ["tuple","dict"]
 
@@ -187,19 +254,36 @@ class Harp:
             case "insert":
                 self.build_insert()
 
+            case "update":
+                self.build_update()
+
             case "delete":
                 self.build_delete()
 
+        self.query = self._apply_ctes(self.query)
+        if printed:
+            p.blueTag("Harp log",self.query.as_string(self.cursor))
+            p.blueTag("Harp log",self.params)
+        if get:
+            return self.query , self.params
+        
 
-        p.blueTag("Harp log",self.query.as_string(self.cursor))
-        p.blueTag("Harp log",self.params)
+
 
         match req_type:
             case "select":
                 await self.cursor.execute(self.query,self.params)
                 rows = await self.cursor.fetchall()
+                if need_commit:
+                    await self.db.commit()
 
             case "insert":
+                await self.cursor.execute(self.query, self.params )
+                rows = await self.cursor.fetchall()
+                if need_commit:
+                    await self.db.commit()
+
+            case "update":
                 await self.cursor.execute(self.query, self.params )
                 rows = await self.cursor.fetchall()
                 if need_commit:
@@ -211,5 +295,3 @@ class Harp:
                 return [dict(zip(cols, row)) for row in rows]
             case "tuple":
                 return rows
-            
-        

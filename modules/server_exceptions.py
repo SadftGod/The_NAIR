@@ -7,6 +7,12 @@ except Exception as e:
    p.yellowFatTag("Exception Error",f"Can not import modules {e}")
    pass
 
+
+
+    
+
+    
+
 class RubberException(Exception):
     def __init__(self, error:str, status:int) -> dict:
         super().__init__({"error": {error}, "status": {status}})
@@ -99,3 +105,7 @@ class RubberException(Exception):
                 RubberException.fastRubber("User must be provided for gRPC positive_token", 5)
         RubberException.positive(token,user,status)
   
+
+
+    
+    

@@ -2,9 +2,9 @@ from modules.palette import Palette as p
 from modules.scyber import Scyber
 import os
 import jwt
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta , date
 import json
-from app.serializers.userSerializer import UserSerializer , CodeSerializer
+from app.serializers.userSerializer import UserSerializer , CodeSerializer , CodeApproveSerializer
 from modules.server_exceptions import RubberException 
 
 class TokenOperator:
@@ -34,12 +34,20 @@ class TokenOperator:
             f.write(key)
         return key
 
+
+    def serialize(self,obj):
+        if isinstance(obj, (date, datetime)):
+            return obj.isoformat()
+        raise TypeError(f"Type {type(obj)} not serializable")
+
+
+
     def create_jwt(self,time_to_wait:timedelta=timedelta(hours=1),jwt_type:str = 'user') -> str:
-        raw = json.dumps(self.data).encode("utf-8")
+        raw = json.dumps(self.data, default=self.serialize).encode("utf-8")
         encoded_data = Scyber(raw).encode(master_key=self.key)
         
         jwt_type = jwt_type.strip().lower()
-        possible_jwt_types = ['user','code']
+        possible_jwt_types = ['user','code','code_approve']
 
         if not jwt_type in possible_jwt_types:
             RubberException.fastRubber(f"WRONG JWT TOKEN TYPE: use one of {' ,'.join(possible_jwt_types)}")
@@ -49,6 +57,8 @@ class TokenOperator:
                 user_json = UserSerializer(self.data).serialize().get_as_json()
             case 'code':
                 user_json = CodeSerializer(self.data).serialize().get_as_json()
+            case 'code_approve':
+                user_json = CodeApproveSerializer(self.data).serialize().get_as_json()
 
         user_dict = json.loads(user_json)
 
