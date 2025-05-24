@@ -19,6 +19,6 @@ If this doesn't work, manually install the dependencies using:
 
 >pip install -r requirements.txt
 
-**<sub> Please note that this code must be run within a Python virtual environment (venv) named envire and be sure that you have already installed python compiller </sub>**
+**<sub> Please note that this code must be run within a Python virtual environment (venv) named venvire and be sure that you have already installed python compiller </sub>**
 
 

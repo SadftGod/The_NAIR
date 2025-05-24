@@ -1,0 +1,364 @@
+@import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap");
+.q-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+}
+.nicegui-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+}
+.logo_l {
+  position: absolute;
+  width: 12vw;
+  z-index: 10;
+  top: 3.6vh;
+  left: 1.5vw;
+  user-select: none;
+  pointer-events: none;
+}
+.style_square {
+  background: radial-gradient(circle at 25% 20%, #efefef 14%, #c957b5 84%);
+  filter: blur(0.2vw);
+}
+.style_square2 {
+  background: radial-gradient(circle at 20% 50%, #c957b5 0%, #754f8b 100%);
+  filter: blur(0.2vw);
+}
+.squere_big {
+  width: 37.5vh;
+  height: 37.5vh;
+  border-radius: 18%;
+  transform: rotate(25.6deg);
+  position: absolute;
+  right: 1vw;
+  top: -0.1vh;
+}
+.squere_little {
+  width: 20vh;
+  height: 20vh;
+  position: absolute;
+  right: 1.875vw;
+  top: 64.7vh;
+  transform: rotate(80.6deg);
+  border-radius: 15%;
+}
+.squere_medium {
+  width: 24.3vh;
+  height: 24.3vh;
+  position: absolute;
+  left: 32.7vw;
+  top: 65.7vh;
+  transform: rotate(52.5deg);
+  border-radius: 18%;
+}
+.login_form {
+  width: 53.3vw;
+  height: 69vh;
+  background: rgba(42,19,77,0.702);
+  position: relative;
+  z-index: 2;
+  border-radius: 4%;
+  padding: 4.5% 2.34% 0 4%;
+  box-sizing: border-box;
+}
+.form_label {
+  position: absolute;
+  background: rgba(239,239,239,0.73);
+  padding: 1vh 2vw;
+  border-radius: 2vh;
+  top: -3%;
+  left: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: column nowrap;
+}
+.form_label div {
+  font-family: "Jura", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 4vh;
+  line-height: 4.5vh;
+  color: #060120;
+  user-select: none;
+}
+.input_container_login {
+  width: 60.5%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-flow: column nowrap;
+}
+.login_input {
+  border: none;
+  outline: none;
+  margin: 0;
+  text-decoration: none;
+  width: 100%;
+  height: 5.6vh;
+  min-height: 50px;
+  padding: 0 3.5%;
+  background: rgba(42,19,77,0.8);
+  border-radius: 40px;
+  box-shadow: inset 0 0 0.1vw 0.2vw rgba(0,0,0,0.25), 0.3vw 0.4vw 1.6vw 0 rgba(0,0,0,0.25);
+  border: 0 solid #060120;
+  position: relative;
+  z-index: 0;
+  font-family: "Jura", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 3vh;
+  line-height: 3.5vh;
+  color: #d9d9d9;
+  transition: 0.4s;
+}
+.login_input:hover {
+  border: 0.1vh solid rgba(67,0,180,0.5);
+}
+.login_input:hover ~ .login_label {
+  color: #bdbdbd;
+}
+.login_input::placeholder {
+  opacity: 0;
+}
+.login_input:not(:placeholder-shown) ~ .login_label {
+  top: -65%;
+  font-family: "Jura", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 2vh;
+  line-height: 3vh;
+}
+.login_input:focus {
+  box-shadow: inset 0 0 0.1vw 0.2vw #4300b4, 0.3vw 0.4vw 1.6vw 0 #4300b4;
+}
+.login_input:focus ~ .login_label {
+  color: #d9d9d9;
+}
+.input_con {
+  margin-top: 10%;
+  position: relative;
+}
+.login_label {
+  font-family: "Jura", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 3vh;
+  line-height: 3.5vh;
+  color: #a1a1a1;
+  position: absolute;
+  z-index: 1;
+  top: 18%;
+  left: 3.5%;
+  transition: 0.2s;
+  user-select: none;
+}
+.checkbox_input {
+  display: none;
+}
+.change_swiper {
+  display: none;
+}
+.swiper_label {
+  background: linear-gradient(to right, #c957b5 0%, #f36c73 100%);
+  width: 4vw;
+  height: 12.7vh;
+  position: absolute;
+  right: 1.25vw;
+  top: 5vh;
+  border-radius: 100vw;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: column nowrap;
+  gap: 21%;
+}
+.swimming_circle {
+  transition: 0.4s;
+  cursor: pointer;
+  border-radius: 100vw;
+  background: #fff;
+  width: 5.9vh;
+  height: 5.9vh;
+  position: absolute;
+  top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+}
+.change_swiper:checked + .swiper_label .swimming_circle {
+  top: 49%;
+}
+.change_swiper:checked + .swiper_label .login_icon {
+  filter: grayscale(1) brightness(0.7);
+}
+.change_swiper:checked + .swiper_label .message_icon {
+  filter: none;
+}
+.message_icon {
+  filter: grayscale(1) brightness(0.7);
+}
+.remember_checkbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-flow: row nowrap;
+  margin: 2.8% 0 0 4%;
+}
+.checkbox_label {
+  color: #efefef;
+  font-family: 'Jura', sans-serif;
+  font-size: 2.3vh;
+  cursor: pointer;
+  padding-left: 32px;
+  position: relative;
+}
+.checkbox_label div {
+  user-select: none;
+}
+.checkbox_label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.11);
+  box-shadow: inset 0 0 0.5vw 0.16vw #fff;
+  transition: all 0.3s ease;
+}
+.checkbox_input:checked + .checkbox_label::before {
+  background: #fff;
+  box-shadow: inset 0 0 0.5vw 0.16vw #4300b4;
+}
+.image_login_status {
+  width: 60%;
+  user-select: none;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.bottom_hint {
+  width: 100%;
+  height: 40.2%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-content: flex-end;
+  flex-flow: row nowrap;
+}
+.hint {
+  background: linear-gradient(to right, #c957b5 0%, #f36c73 100%);
+  width: 6.9vh;
+  height: 6.9vh;
+  overflow: hidden;
+  border-radius: 5vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+  gap: 0.5vw;
+  transition: 0.2s;
+  padding-right: 0;
+  transform-origin: left bottom;
+  box-sizing: border-box;
+}
+.hint:hover {
+  border-radius: 2vw;
+  padding-right: 3%;
+  width: 20.4vw;
+  height: 16.4vh;
+}
+.support_text {
+  font-family: "Jura", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-size: 2vh;
+  line-height: 2.5vh;
+  color: #d9d9d9;
+}
+.i_circle {
+  margin-left: 8%;
+  width: 5.8vh;
+  height: 5.8vh;
+  min-width: 5.8vh;
+  min-height: 5.8vh;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 100vw;
+  font-family: "Jura", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-size: 6vh;
+  line-height: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+  color: #c957b5;
+  user-select: none;
+}
+.enter_login {
+  cursor: pointer;
+  user-select: none;
+  color: rgba(255,255,255,0.603);
+  width: 35.4%;
+  height: 8.4vh;
+  background: rgba(117,79,139,0.812);
+  border-radius: 2vw;
+  font-family: "Jura", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 5vh;
+  line-height: 5.2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+  box-sizing: border-box;
+  filter: drop-shadow(0 0.4vw 0.4vw rgba(201,81,187,0.8));
+  box-shadow: inset 0 0 0.5vw 0.2vw rgba(201,81,187,0.3);
+  transition: 0.2s;
+}
+.enter_login:hover {
+  color: #fff;
+  background: rgba(201,87,181,0.812);
+  filter: drop-shadow(0 0.4vw 0.4vw rgba(243,108,115,0.678));
+  box-shadow: inset 0 0 0.5vw 0.2vw rgba(243,108,115,0.678);
+}
+.avatar_field {
+  width: 32.8vw;
+  height: 73.3vh;
+  background: rgba(208,208,208,0.168);
+  position: relative;
+  border-radius: 4%;
+  transition: 0.4s;
+  z-index: 2;
+}
+.avatar_field:hover {
+  background: rgba(208,208,208,0.23);
+}

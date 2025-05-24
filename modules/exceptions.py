@@ -6,8 +6,7 @@ except Exception as e:
    p.yellowFatTag("Exception Error",f"Can not import modules {e}")
    pass
 
-      
-            
+  
 class RatException(Exception):
    def __init__(self, error) -> None:
       super().__init__(error)

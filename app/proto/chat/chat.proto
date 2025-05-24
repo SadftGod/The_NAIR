@@ -1,0 +1,17 @@
+syntax = "proto3";
+import "common/common.proto";
+
+service ChatService {
+  rpc ChatQuestion (ChatQuestionRequest) returns (ChatQuestionResponse);
+}
+
+message ChatQuestionRequest {
+    string query = 1;
+}
+
+message ChatQuestionResponse {
+    oneof result {
+      string     message        = 1;
+      common.DefaultErrorResponse     error_response = 2;
+    }
+}

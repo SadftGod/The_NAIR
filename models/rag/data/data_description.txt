@@ -1,0 +1,53 @@
+id: integer, unique identifier of the tariff plan record
+plan: string, name of the tariff plan
+description: string, detailed description of the plan’s features and benefits
+monthly_price_usd: number, monthly subscription price in US dollars
+
+# Synonyms for query terms and column names
+plan, tariff, subscription, package
+price, cost, fee, charge, monthly price, monthly cost, monthly fee, price per month
+description, details, info, information, features, plan details
+id, identifier, plan id, record id
+
+# Common misspellings and variations
+monthly_price_usd, monhtly_price_usd, monthlypriceusd, monthly_price, monthlyfee, montly_fee, monthlycost
+description, descripton, descriptio, desc, descrip
+plan, tlran, pelan, package, pakcage, subscripton
+tariff, tarfiff, tariffe
+
+# Example user query patterns
+What is the price of the {plan} plan?
+How much does the {plan} subscription cost?
+Show me the cost of the {plan} package.
+Tell me the monthly fee for the {plan} plan.
+Give me the description of the {plan} plan.
+I need info about the {plan} tariff.
+Cost per month for {plan}.
+Price per month for {plan}.
+Description for {plan}.
+How much is the {plan}.
+
+# Additional synonyms and variations
+features, perks, advantages, benefits, inclusions, what's included
+plan features, plan perks, plan benefits, plan advantages
+subscription plan, service plan, billing plan
+
+# More common misspellings and case variations
+Subscription, subscription, SUBSCRIPTION
+Features, featuers, featurs, featuress
+Benefits, benifits, beneifts
+Advantages, advantges, advanatges
+
+# More example user query patterns
+List all available plans.
+Compare prices of all plans.
+What features are included in the {plan} plan?
+What benefits does the {plan} offer?
+Show me the perks of the {plan}.
+Give details on the {plan} features.
+What are the advantages of the {plan} plan?
+How does the {plan} compare to the default plan?
+
+
+# Cross-application queries? Nice try, but we’re not TSA—plans elsewhere are a no-fly zone 🛑😉
+# Keep it here: don’t ask about our prices in other apps or face the wrath of our sarcasm. 🚫😂

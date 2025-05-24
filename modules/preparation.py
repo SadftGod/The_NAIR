@@ -11,7 +11,6 @@ class Preparator:
          Scratch.from_()
          from modules.exceptions import RatException
          try:
-
         
             from modules.libs import Libs
             libs = Libs()
