@@ -20,7 +20,6 @@ class AuthRouter(authRouter_pb2_grpc.AuthServiceServicer):
     @not_empty("login","password")
     async def Login(self, request, context):
         login,password = request.login ,request.password
-
         try:
             uv(login=login,password=password) \
                 .password_check()\

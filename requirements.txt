@@ -34,3 +34,5 @@ langchain-community
 langchain-huggingface
 protobuf
 sentencepiece
+psycopg[binary]
+grpcio-reflection

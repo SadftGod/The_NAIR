@@ -274,10 +274,6 @@ class DefaultDataCreature:
     @connection([Bases.u.value])
     async def create_users(self,pool):
         db, cursor = pool[Bases.u.value]
-
-
-        
-
         columns = [
             'email',
             'nickname',

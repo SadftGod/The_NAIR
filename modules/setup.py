@@ -22,26 +22,11 @@ class SetUp:
       
       try:
          await self.fill_databases()
-         await self.start_grpc()
       finally:
          from modules.module import Module as m
          
          m.clean_up("logs/daemon_error.log")
 
-      
-   async def start_grpc(self):
-      from app.servers.grpc import GRPC_server
-      
-      port = 2634
-      grpc_server = GRPC_server()
-      server = grpc_server()
-      server.add_insecure_port(f'[::]:{port}')
-      await server.start()
-      
-      from modules.palette import Palette as p
-      
-      p.cyanTag("Server",f"Started on {p.whiteBackReturn(port)}")
-      await server.wait_for_termination() 
 
    async def fill_databases(self):
       from app.database.configurators.configurator import Configurator ,DefaultDataCreature
@@ -55,16 +40,16 @@ class SetUp:
       await DefaultDataCreature().create_languages()
       await DefaultDataCreature().create_users()
       
-      from app.servers.grpc_server import GRPC_server
+      from app.servers.grpc import GRPC_server
       port = 50526
       server = GRPC_server()()
       server.add_insecure_port(f'[::]:{port}')
-      server.start()
+      await server.start()
 
       from modules.palette import Palette as p
     
       p.cyanTag("gRPC Server",f"Started on {p.whiteBackReturn(port)}")
-      server.wait_for_termination() 
+      await server.wait_for_termination() 
 
    
    def check_venv(self):
