@@ -14,4 +14,6 @@ class DefaultValidator:
             if id < 0:
                 RubberException.fastRubber("ID must be greater than zero", 3)
 
-            
+    def validate_string(value):
+        if not isinstance(value,str):
+            RubberException.fastRubber("Value must be a string",3)

@@ -8,4 +8,5 @@ __pycache__/
 /modules/logs/*
 /logs/*
 
-models/box/invenv/
+.history/*
+models/core/llama-7b/

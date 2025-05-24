@@ -139,7 +139,6 @@ class AuthSQLController:
             .join("themes t","t._id = u.theme_id")\
             .call(req_type="select",return_type="dict")
 
-
     @staticmethod
     @connection([Bases.u.value])
     async def register(email,nickname,password,language_id,code:int,pool:dict):

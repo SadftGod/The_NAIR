@@ -1,0 +1,268 @@
+@import "module"
+
+.q-page
+    flexer(c,c,rn)
+.nicegui-content
+    flexer(c,c,rn)
+
+
+.logo_l
+    position absolute
+    width 12vw
+    z-index 10
+    top 3.6vh
+    left 1.5vw
+    user-select: none;
+    pointer-events: none;
+
+.style_square
+    background: radial-gradient(
+        circle at 25% 20%,
+        #efefef 14%,
+        #c957b5 84%
+    );
+    filter: blur(0.2vw);
+
+.style_square2
+    background: radial-gradient(
+        circle at 20% 50%,
+        #C957B5 0%,
+        #754F8B 100%
+    );
+    filter: blur(0.2vw);
+
+.squere_big
+    sizer(37.5vh,37.5vh)
+    border-radius 18%
+    transform: rotate(25.6deg)
+    position absolute
+    right: 1vw
+    top: -0.1vh
+
+.squere_little
+    sizer(20vh,20vh)
+    position absolute
+    right: 1.875vw
+    top 64.7vh
+    transform: rotate(80.6deg)
+    border-radius 15%
+
+
+.squere_medium
+    sizer(24.3vh,24.3vh)
+    position absolute
+    left 32.7vw
+    top 65.7vh
+    transform: rotate(52.5deg)
+    border-radius 18%
+
+.login_form
+    sizer(53.3vw,69vh)
+    background: #2A134DB3
+    position: relative
+    z-index 2
+    border-radius: 4%
+    padding: 4.5% 2.34% 0 4%
+    box-sizing: bb
+
+.form_label
+    position absolute
+    background : rgba(239, 239, 239, 0.73)
+    padding 1vh 2vw
+    border-radius: 2vh
+    top -3%
+    left 2%
+    flexer(c,c,cn)
+    div 
+        fonter(fsb,4vh,4.5vh)
+        color dark_violet
+        user-select: none
+
+.input_container_login
+    width 60.5%
+    flexer(s,s,cn)
+
+.login_input
+    anone()
+    sizer(100%,5.6vh)
+    min-height: 50px
+    padding: 0 3.5%
+    background: rgba(42, 19, 77, 0.8)
+    border-radius: 40px
+    box-shadow inset 0 0 0.1vw 0.2vw rgba(0, 0, 0, 0.25), 0.3vw 0.4vw 1.6vw 0 rgba(0, 0, 0, 0.25)
+    border 0 solid dark_violet
+    position relative
+    z-index 0
+    fonter(fsb,3vh,3.5vh)
+    color wht
+    transition .4s
+    &:hover
+        border .1vh solid rgba(67, 0, 180, .5) 
+        ~ .login_label
+            color whtl
+    &::placeholder
+      opacity 0
+    &:not(:placeholder-shown)  
+        ~ .login_label
+            top -65%
+            fonter(fsb,2vh,3vh)
+
+     &:focus
+        box-shadow inset 0 0 0.1vw 0.2vw rgba(67, 0, 180, 1), 0.3vw 0.4vw 1.6vw 0 rgba(67, 0, 180, 1)
+        ~ .login_label
+            color wht
+        
+  
+.input_con
+    margin-top 10%
+    position relative
+
+
+.login_label
+    fonter(fsb,3vh,3.5vh)
+    color gry
+    position absolute
+    z-index 1
+    top 18%
+    left 3.5%
+    transition: .2s
+    user-select none
+    
+.checkbox_input
+  display none
+.change_swiper
+    display: none
+.swiper_label
+    background: linear-gradient(to right, #C957B5 0%, #F36C73 100%);
+    sizer(4vw,12.7vh)
+    position: absolute
+    right 1.25vw
+    top 5vh
+    border-radius: 100vw
+    cursor pointer
+    flexer(c,c,cn)
+    gap 21%
+.swimming_circle
+    transition: .4s
+    cursor pointer
+    border-radius: 100vw
+    background: white
+    sizer(5.9vh,5.9vh)
+    position: absolute
+    top 5%
+    flexer(c,c,rn)
+
+
+
+.change_swiper:checked + .swiper_label
+    .swimming_circle
+        top 49%
+    .login_icon
+        filter grayscale(1) brightness(0.7)
+    .message_icon
+        filter none    
+.message_icon
+    filter grayscale(1) brightness(0.7)
+
+
+
+.remember_checkbox
+    flexer(s,s,rn)
+    margin 2.8% 0 0 4%
+.checkbox_label
+  color #efefef
+  font-family 'Jura', sans-serif
+  font-size 2.3vh
+  cursor pointer
+  padding-left 32px
+  position relative
+  div
+    user-select: none
+
+  &::before
+    content ''
+    position absolute
+    left 0
+    top 50%
+    transform translateY(-50%)
+    width 22px
+    height 22px
+    border-radius 50%
+    background rgba(255, 255, 255, 0.11)
+    box-shadow inset 0 0 .5vw .16vw rgba(255, 255, 255, 1)
+    transition all 0.3s ease
+
+.checkbox_input:checked + .checkbox_label::before
+    background rgba(255, 255, 255, 1)
+    box-shadow inset 0 0 .5vw .16vw rgba(67, 0, 180, 1)
+
+.image_login_status
+    width 60%
+    user-select: none;
+    pointer-events: none;
+    transition: .4s
+
+.bottom_hint
+    sizer(100%,40.2%)
+    flexer(sb,e,rn)
+
+.hint
+    background: linear-gradient(to right, #C957B5 0%, #F36C73 100%);
+    sizer(6.9vh,6.9vh)
+    overflow: hidden
+    border-radius: 5vw
+    flexer(s,c,rn)
+    gap .5vw
+    transition .2s
+    padding-right: 0
+    transform-origin left bottom
+    box-sizing: bb
+    &:hover
+        border-radius: 2vw
+        padding-right: 3%
+        sizer(20.4vw,16.4vh)
+
+.support_text
+    fonter(fb,2vh,2.5vh)
+    color wht
+.i_circle
+    margin-left 8%
+    sizer(5.8vh,5.8vh)
+    min-width 5.8vh
+    min-height 5.8vh
+    box-sizing: border-box
+    background: white
+    border-radius: 100vw
+    fonter(fb,6vh,6vh)
+    flexer(c,c,rn)
+    color #C957B5
+    user-select: none
+.enter_login
+    cursor pointer
+    user-select: none
+    color rgba(255, 255, 255, 0.603)
+    sizer(35.4%,8.4vh)
+    background: #754f8bcf
+    border-radius: 2vw
+    fonter(fl,5vh,5.2vh)
+    flexer(c,c,rn)
+    box-sizing: bb 
+    filter: drop-shadow(0 .4vw 0.4vw rgba(201, 81, 187, 0.8));
+    box-shadow: inset 0 0 0.5vw 0.2vw rgba(201, 81, 187, 0.3);
+    transition: .2s
+    &:hover
+        color rgba(255, 255, 255, 1)
+        background: #C957B5cf
+        filter: drop-shadow(0 .4vw 0.4vw #f36c73ad);
+        box-shadow: inset 0 0 0.5vw 0.2vw #f36c73ad;
+
+
+.avatar_field
+    sizer(32.8vw,73.3vh)
+    background: rgba(208, 208, 208, 0.168)
+    position relative
+    border-radius: 4%
+    transition: .4s
+    z-index 2
+    &:hover
+        background: rgba(208, 208, 208, 0.23)

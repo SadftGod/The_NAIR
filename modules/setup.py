@@ -4,7 +4,6 @@ import signal
 import subprocess
 
 
-from modules.argparser import parse_args
 class SetUp:
    async def __call__(self):
       signal.signal(signal.SIGINT, self.signal_exit)
@@ -17,7 +16,6 @@ class SetUp:
 
       from modules.palette import Palette as p
 
-      args = parse_args()
       
       from modules.secret_coder import GCoder
       gc = GCoder()

@@ -72,7 +72,6 @@ class AuthRouter(authRouter_pb2_grpc.AuthServiceServicer):
                 )
                 )
 
-
         
     @RubberCatcher(True)
     @authorize()
@@ -103,6 +102,5 @@ class AuthRouter(authRouter_pb2_grpc.AuthServiceServicer):
                 )
 
 
-        
         
         
