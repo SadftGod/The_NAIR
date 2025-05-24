@@ -21,4 +21,18 @@ If this doesn't work, manually install the dependencies using:
 
 **<sub> Please note that this code must be run within a Python virtual environment (venv) named venvire and be sure that you have already installed python compiller </sub>**
 
+## 🔒 Requirements
 
+- Python 3.10+
+- Virtual environment named `venvire`
+- Ensure `python` and `pip` are available in your shell
+
+* if u don't create envire, run the script twice
+
+## 🔒 Необхідні умови
+
+- Python 3.10+
+- Віртуальне середовище з назвою `venvire`
+- Переконайтеся, що `python` і `pip` доступні у вашому терміналі
+
+* якщо ви не створили `venvire`, запустіть скрипт двічі
