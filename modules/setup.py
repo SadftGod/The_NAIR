@@ -15,7 +15,6 @@ class SetUp:
       pre.load()
 
       from modules.palette import Palette as p
-
       
       from modules.secret_coder import GCoder
       gc = GCoder()
@@ -40,6 +39,7 @@ class SetUp:
       await server.start()
       
       from modules.palette import Palette as p
+      
       p.cyanTag("Server",f"Started on {p.whiteBackReturn(port)}")
       await server.wait_for_termination() 
 
@@ -55,6 +55,16 @@ class SetUp:
       await DefaultDataCreature().create_languages()
       await DefaultDataCreature().create_users()
       
+      from app.servers.grpc_server import GRPC_server
+      port = 50526
+      server = GRPC_server()()
+      server.add_insecure_port(f'[::]:{port}')
+      server.start()
+
+      from modules.palette import Palette as p
+    
+      p.cyanTag("gRPC Server",f"Started on {p.whiteBackReturn(port)}")
+      server.wait_for_termination() 
 
    
    def check_venv(self):
