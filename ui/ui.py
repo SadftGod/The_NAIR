@@ -7,6 +7,7 @@ from ui.utils.decorators import require_token
 def build_ui():
     app.mount('/static', StaticFiles(directory='ui/static'), name='static')
 
+
     @ui.page("/login")
     def login_page():
         ui.add_head_html('<link rel="stylesheet" href="/static/dist/main.css">')
@@ -21,6 +22,8 @@ def build_ui():
         if not token:
             ui.navigate.to('/login')
             return
+        ui.add_head_html('<link rel="stylesheet" href="/static/dist/main.css">')
+        ui.add_head_html('<link rel="stylesheet" href="/static/dist/home.css">')
 
         home.render()
 

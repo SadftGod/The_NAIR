@@ -17,7 +17,6 @@ class Libs:
         with open("logs/install_logs.log", "w") as log_file:
             try:
                 from modules.palette import Palette as p
-                p.red(package)
                 pkg_resources.get_distribution(package)
                 self.done_counter += 1
                 return True

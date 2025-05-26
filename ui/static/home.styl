@@ -1,0 +1,121 @@
+@import "module"
+
+.q-page
+    flexer(c,c,rn)
+.nicegui-content
+    sizer(100%,100vh)
+    flexer(c,c,rn)
+
+
+
+.style_square
+    background: radial-gradient(
+        circle at 25% 20%,
+        #efefef 14%,
+        #c957b5 84%
+    );
+    filter: blur(0.2vw);
+
+.style_square2
+    background: radial-gradient(
+        circle at 20% 50%,
+        #C957B5 0%,
+        #754F8B 100%
+    );
+    filter: blur(0.2vw);
+
+.squere_big
+    sizer(37.5vh,37.5vh)
+    border-radius 18%
+    transform: rotate(25.6deg)
+    position absolute
+    right: 46vw
+    top: -4.1vh
+
+.squere_little
+    sizer(20vh,20vh)
+    position absolute
+    right: 1.875vw
+    top 64.7vh
+    transform: rotate(80.6deg)
+    border-radius 15%
+
+
+.squere_medium
+    sizer(24.3vh,24.3vh)
+    position absolute
+    left 81.7vw
+    top 12.7vh
+    transform: rotate(52.5deg)
+    border-radius 18%
+
+.main_menu
+    flexer(sb,c,rn)
+    sizer(100%,100vh)
+.chat_section
+    sizer(65.625%,94.35%)
+    position relative
+    z-index 2
+    flexer(e,c,rn)
+.swipping_panel
+    sizer(100%,100%)
+    background rgba(42,19,77,.7)
+    border-radius 6vh
+    position absolute
+    top 0
+    right 0
+    z-index 3
+.chat_container
+    sizer(95%,100%)
+    background rgba(42,19,77,.7)
+    border-radius 2vh
+    top 0 
+    right 0
+    z-index 4
+    flexer(s,s,cn)
+
+
+.menu_container
+    position relative
+    width 6.04vw
+    
+.rhombus
+    position absolute
+    background #EFEFEF
+    border-radius 1vh
+    transform rotate(45deg)
+    sizer(4vh,4vh)
+.first_rh
+    left 0
+    opacity 28%
+.second_rh
+    opacity 70%
+    left 25%
+.third_rh
+    opacity 94%
+    left 50%
+.menu_container
+    position absolute
+    top 2vh
+    cursor pointer
+    sizer(9.25vh,5vh)
+
+.messages
+    sizer(100%,92%)
+.input_block
+    sizer(100%,8%)
+    flexer(c,c,rn)
+.send_input
+    sizer(98%,90%)
+    border-radius 5vh
+    background rgba(201, 132, 188, 0.77)
+    box-sizing bb 
+    padding 0 2%
+    fonter(400,3.6vh,4vh)
+    color rgba(255, 255, 255, 0.67)
+    outline none 
+    border none
+    &::selection
+        background rgba(255, 255, 255, 0.67)
+        color rgba(201, 132, 188, 0.77)
+    

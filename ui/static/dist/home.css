@@ -1,0 +1,161 @@
+@import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap");
+.q-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+}
+.nicegui-content {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+}
+.style_square {
+  background: radial-gradient(circle at 25% 20%, #efefef 14%, #c957b5 84%);
+  filter: blur(0.2vw);
+}
+.style_square2 {
+  background: radial-gradient(circle at 20% 50%, #c957b5 0%, #754f8b 100%);
+  filter: blur(0.2vw);
+}
+.squere_big {
+  width: 37.5vh;
+  height: 37.5vh;
+  border-radius: 18%;
+  transform: rotate(25.6deg);
+  position: absolute;
+  right: 46vw;
+  top: -4.1vh;
+}
+.squere_little {
+  width: 20vh;
+  height: 20vh;
+  position: absolute;
+  right: 1.875vw;
+  top: 64.7vh;
+  transform: rotate(80.6deg);
+  border-radius: 15%;
+}
+.squere_medium {
+  width: 24.3vh;
+  height: 24.3vh;
+  position: absolute;
+  left: 81.7vw;
+  top: 12.7vh;
+  transform: rotate(52.5deg);
+  border-radius: 18%;
+}
+.main_menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 100vh;
+}
+.chat_section {
+  width: 65.625%;
+  height: 94.35%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+}
+.swipping_panel {
+  width: 100%;
+  height: 100%;
+  background: rgba(42,19,77,0.7);
+  border-radius: 6vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+}
+.chat_container {
+  width: 95%;
+  height: 100%;
+  background: rgba(42,19,77,0.7);
+  border-radius: 2vh;
+  top: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-flow: column nowrap;
+}
+.menu_container {
+  position: relative;
+  width: 6.04vw;
+}
+.rhombus {
+  position: absolute;
+  background: #efefef;
+  border-radius: 1vh;
+  transform: rotate(45deg);
+  width: 4vh;
+  height: 4vh;
+}
+.first_rh {
+  left: 0;
+  opacity: 28%;
+}
+.second_rh {
+  opacity: 70%;
+  left: 25%;
+}
+.third_rh {
+  opacity: 94%;
+  left: 50%;
+}
+.menu_container {
+  position: absolute;
+  top: 2vh;
+  cursor: pointer;
+  width: 9.25vh;
+  height: 5vh;
+}
+.messages {
+  width: 100%;
+  height: 92%;
+}
+.input_block {
+  width: 100%;
+  height: 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-flow: row nowrap;
+}
+.send_input {
+  width: 98%;
+  height: 90%;
+  border-radius: 5vh;
+  background: rgba(201,132,188,0.77);
+  box-sizing: border-box;
+  padding: 0 2%;
+  font-family: "Jura", sans-serif;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 3.6vh;
+  line-height: 4vh;
+  color: rgba(255,255,255,0.67);
+  outline: none;
+  border: none;
+}
+.send_input::selection {
+  background: rgba(255,255,255,0.67);
+  color: rgba(201,132,188,0.77);
+}
